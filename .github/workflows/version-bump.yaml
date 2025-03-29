@@ -35,14 +35,14 @@ jobs:
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
-      - name: Build
-        run: npm run build
-
       - name: Bump version
         id: version-bump
         run: |
           npm version ${{ github.event.inputs.version_type }} -m "Bump version to %s [skip ci]"
           echo "new_version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
+      - name: Build
+        run: npm run build
 
       - name: Add dist files
         run: |
