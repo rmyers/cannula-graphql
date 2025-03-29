@@ -73,7 +73,7 @@ var UILibrary = (function () {
 
   var toastTemplate = "<div class=\"toast\"><div class=\"toast-icon\"><svg class=\"icon-success\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\"/></svg> <svg class=\"icon-error\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z\"/></svg> <svg class=\"icon-info\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/></svg> <svg class=\"icon-warning\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z\"/></svg></div><span class=\"message\"></span> <button class=\"close-btn\" aria-label=\"Close\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/></svg></button></div>";
 
-  var toastStyles = ":host{--toast-success-color:var(--pico-color-success,#43a047);--toast-error-color:var(--pico-color-error,#d32f2f);--toast-info-color:var(--pico-primary,#1976d2);--toast-warning-color:var(--pico-color-warning,#f57c00);--toast-text-color:var(--pico-color-text-inverse,white);--toast-shadow:var(--pico-card-shadow,0 3px 10px rgba(0,0,0,0.2));--toast-border-radius:var(--pico-border-radius,4px);--toast-font-family:var(--pico-font-family,sans-serif);--toast-font-size:var(--pico-font-size,16px);position:fixed;bottom:20px;right:20px;z-index:1000;visibility:hidden;min-width:250px;max-width:320px;padding:var(--pico-spacing,12px 16px);border-radius:var(--toast-border-radius);font-family:var(--toast-font-family);font-size:var(--toast-font-size);box-shadow:var(--toast-shadow);transition:transform 0.2s ease-out,opacity 0.2s ease-out;transform:translateY(30px);opacity:0;}:host(.visible){visibility:visible;transform:translateY(0);opacity:1;}:host(.success){background-color:var(--toast-success-color);color:var(--toast-text-color);}:host(.error){background-color:var(--toast-error-color);color:var(--toast-text-color);}:host(.info){background-color:var(--toast-info-color);color:var(--toast-text-color);}:host(.warning){background-color:var(--toast-warning-color);color:var(--toast-text-color);}.content{display:flex;align-items:center;gap:8px;}.message{flex-grow:1;}button{--pico-button-padding:0;background:transparent;border:none;color:inherit;cursor:pointer;margin-left:auto;opacity:0.7;transition:opacity 0.2s;display:flex;align-items:center;justify-content:center;padding:0;}button:hover{opacity:1;}svg{width:20px;height:20px;fill:currentColor;}@media (max-width:600px){.toast{min-width:auto;max-width:none;width:calc(100vw - 40px);}}";
+  var toastStyles = ":host{--toast-success-color:var(--pico-color-success,#10B981);--toast-error-color:var(--pico-color-error,#EF4444);--toast-info-color:var(--pico-primary,#3B82F6);--toast-warning-color:var(--pico-color-warning,#F59E0B);--toast-text-color:var(--pico-color-text,#6B7280);--toast-shadow:var(--pico-card-shadow,0 4px 12px rgba(0,0,0,0.15));--toast-border-radius:var(--pico-border-radius,8px);position:fixed;bottom:20px;right:20px;z-index:9999;display:block;min-width:300px;max-width:500px;transition:transform 0.3s ease,opacity 0.3s ease;transform:translateY(20px);opacity:0;pointer-events:none;background-color:transparent;}:host(.visible){transform:translateY(0);opacity:1;pointer-events:all;}.toast{display:flex;align-items:center;justify-content:space-between;box-shadow:var(--toast-shadow);padding:12px 16px;border-radius:var(--toast-border-radius);background:white;font-size:medium;}:host(.success) .toast{border:2px solid var(--toast-success-color);}:host(.error) .toast{border:2px solid var(--toast-error-color);}:host(.info) .toast{border:2px solid var(--toast-info-color);}:host(.warning) .toast{border:2px solid var(--toast-warning-color);}.toast-icon{margin-right:12px;font-size:20px;}.toast-icon svg{display:none;width:24px;height:24px;}:host(.success) .toast-icon .icon-success{display:block;fill:var(--toast-success-color);}:host(.error) .toast-icon .icon-error{display:block;fill:var(--toast-error-color);}:host(.info) .toast-icon .icon-info{display:block;fill:var(--toast-info-color);}:host(.warning) .toast-icon .icon-warning{display:block;fill:var(--toast-warning-color);}.message{flex:1;color:var(--toast-text-color);}.close-btn{background:none;border:none;cursor:pointer;font-size:18px;margin-left:8px;padding:4px;color:#6B7280;}.close-btn svg{width:18px;height:18px;fill:currentColor;}@media (max-width:600px){:host{min-width:auto;max-width:none;width:calc(100vw - 40px);}}";
 
   /**
    * Toast notification component
@@ -223,14 +223,18 @@ var UILibrary = (function () {
      * @returns {ToastElement} This instance for chaining
      */
     show() {
-      if (this._timerId) {
-        clearTimeout(this._timerId);
-        this._timerId = null;
-      }
+      if (this._visible) return this;
 
+      this._visible = true;
       this.classList.add("visible");
 
-      if (this._autoHide) {
+      // Dispatch shown event
+      this.dispatchEvent(new CustomEvent("toast:shown"));
+
+      // Reposition all toasts
+      this._repositionAllToasts();
+
+      if (this._autoHide && this._duration > 0) {
         this._timerId = setTimeout(() => {
           this.hide();
         }, this._duration);
@@ -244,6 +248,9 @@ var UILibrary = (function () {
      * @returns {ToastElement} This instance for chaining
      */
     hide() {
+      if (!this._visible) return this;
+
+      this._visible = false;
       this.classList.remove("visible");
 
       if (this._timerId) {
@@ -251,9 +258,56 @@ var UILibrary = (function () {
         this._timerId = null;
       }
 
-      this.dispatchEvent(new CustomEvent("toast-hidden"));
+      // Add a small delay to allow for animation, matching GraphQLToast
+      setTimeout(() => {
+        // Dispatch hidden event
+        this.dispatchEvent(new CustomEvent("toast:hidden"));
+
+        // If this is from auto-hide, remove the element from DOM
+        if (this._autoHide) {
+          this.parentNode?.removeChild(this);
+        }
+
+        // Reposition remaining toasts
+        this._repositionAllToasts();
+      }, 300); // Match this delay with CSS transition time
 
       return this;
+    }
+
+    /**
+     * Reposition all toasts to stack properly
+     * @private
+     */
+    _repositionAllToasts() {
+      document.querySelectorAll("toast-element").forEach((toast, index, all) => {
+        if (toast._visible) {
+          toast._updatePosition(index, all.length);
+        }
+      });
+    }
+
+    /**
+     * Update the position of this toast based on its index
+     * @param {number} index - Index of this toast
+     * @param {number} total - Total number of toasts
+     * @private
+     */
+    _updatePosition(index, total) {
+      const spaceBetween = 10; // px
+      const base = 20; // base distance from edge (px)
+
+      // Calculate height including margins
+      const height = this.offsetHeight + spaceBetween;
+
+      // Calculate position from bottom
+      const bottom = base + index * height;
+
+      // Update position
+      this.style.setProperty("bottom", `${bottom}px`);
+
+      // Make sure toast is visible in viewport
+      this.style.setProperty("z-index", String(10000 - index));
     }
   }
 

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cannula GraphQL UI Demo</title>
+    <!-- Import the UI library from the dist folder -->
+    <script src="../dist/ui-library.js"></script>
+</head>
+
+<body class="container">
+
+    <hgroup>
+        <h1>Cannula GraphQL UI Demo</h1>
+        <p>This page demonstrates the UI components from the cannula-graphql library.</p>
+    </hgroup>
+
+    <article>
+        <hgroup>
+
+            <h2>Toast Notifications</h2>
+            <p>Simple toast notifications for your GraphQL application.</p>
+        </hgroup>
+
+        <theme-toggle></theme-toggle>
+        <div class="controls">
+            <button id="successToast">Success Toast</button>
+            <button id="infoToast">Info Toast</button>
+            <button id="warningToast">Warning Toast</button>
+            <button id="errorToast">Error Toast</button>
+        </div>
+
+    </article>
+    <article>
+        <div class="options">
+            <div class="option-group">
+                <label class="option-label">Duration (ms)</label>
+                <input type="number" id="toastDuration" value="5000" min="1000" step="1000">
+            </div>
+        </div>
+
+        <pre>
+
+// Show a success toast notification
+showToast({
+    type: 'success',
+    message: 'Your operation was completed successfully.',
+    duration: 5000
+});
+        </pre>
+
+    </article>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Toast notifications demo
+            document.getElementById('successToast').addEventListener('click', function () {
+                const duration = parseInt(document.getElementById('toastDuration').value);
+
+                showToast({
+                    type: 'success',
+                    title: 'Success!',
+                    message: 'Your GraphQL query executed successfully.',
+                    duration: duration
+                });
+            });
+
+            document.getElementById('infoToast').addEventListener('click', function () {
+                const duration = parseInt(document.getElementById('toastDuration').value);
+
+                showToast({
+                    type: 'info',
+                    title: 'Information',
+                    message: 'GraphQL schema updated. New fields are available.',
+                    duration: duration
+                });
+            });
+
+            document.getElementById('warningToast').addEventListener('click', function () {
+                const duration = parseInt(document.getElementById('toastDuration').value);
+
+                showToast({
+                    type: 'warning',
+                    title: 'Warning',
+                    message: 'This operation might be slow due to complex query.',
+                    duration: duration
+                });
+            });
+
+            document.getElementById('errorToast').addEventListener('click', function () {
+                const duration = parseInt(document.getElementById('toastDuration').value);
+
+                showToast({
+                    type: 'error',
+                    title: 'Error',
+                    message: 'GraphQL query failed: Field does not exist on type.',
+                    duration: duration
+                });
+            });
+
+        });
+    </script>
+</body>
+
+</html>

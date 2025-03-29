@@ -150,14 +150,18 @@ export class ToastElement extends HTMLElement {
    * @returns {ToastElement} This instance for chaining
    */
   show() {
-    if (this._timerId) {
-      clearTimeout(this._timerId);
-      this._timerId = null;
-    }
+    if (this._visible) return this;
 
+    this._visible = true;
     this.classList.add("visible");
 
-    if (this._autoHide) {
+    // Dispatch shown event
+    this.dispatchEvent(new CustomEvent("toast:shown"));
+
+    // Reposition all toasts
+    this._repositionAllToasts();
+
+    if (this._autoHide && this._duration > 0) {
       this._timerId = setTimeout(() => {
         this.hide();
       }, this._duration);
@@ -171,6 +175,9 @@ export class ToastElement extends HTMLElement {
    * @returns {ToastElement} This instance for chaining
    */
   hide() {
+    if (!this._visible) return this;
+
+    this._visible = false;
     this.classList.remove("visible");
 
     if (this._timerId) {
@@ -178,9 +185,56 @@ export class ToastElement extends HTMLElement {
       this._timerId = null;
     }
 
-    this.dispatchEvent(new CustomEvent("toast-hidden"));
+    // Add a small delay to allow for animation, matching GraphQLToast
+    setTimeout(() => {
+      // Dispatch hidden event
+      this.dispatchEvent(new CustomEvent("toast:hidden"));
+
+      // If this is from auto-hide, remove the element from DOM
+      if (this._autoHide) {
+        this.parentNode?.removeChild(this);
+      }
+
+      // Reposition remaining toasts
+      this._repositionAllToasts();
+    }, 300); // Match this delay with CSS transition time
 
     return this;
+  }
+
+  /**
+   * Reposition all toasts to stack properly
+   * @private
+   */
+  _repositionAllToasts() {
+    document.querySelectorAll("toast-element").forEach((toast, index, all) => {
+      if (toast._visible) {
+        toast._updatePosition(index, all.length);
+      }
+    });
+  }
+
+  /**
+   * Update the position of this toast based on its index
+   * @param {number} index - Index of this toast
+   * @param {number} total - Total number of toasts
+   * @private
+   */
+  _updatePosition(index, total) {
+    const spaceBetween = 10; // px
+    const base = 20; // base distance from edge (px)
+
+    // Calculate height including margins
+    const height = this.offsetHeight + spaceBetween;
+
+    // Calculate position from bottom
+    const bottom = base + index * height;
+
+    // Update position
+    this.style.setProperty("bottom", `${bottom}px`);
+
+    // Make sure toast is visible in viewport
+    this.style.setProperty("z-index", String(10000 - index));
   }
 }
 
