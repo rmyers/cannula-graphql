@@ -1,3 +1,5 @@
+import { showToast } from "./toast/toast";
+
 // Form error handling with PicoCSS
 export class FormErrorHandler {
   /**
@@ -174,39 +176,23 @@ export class GraphQLToastHandler {
     if (response.errors && response.errors.length > 0) {
       // Display each error as a separate toast
       response.errors.forEach((error) => {
-        GraphQLToastHandler.create(
-          "error",
-          error.message || "An error occurred",
+        showToast({
+          type: "error",
+          message: error.message || "An error occurred",
           duration,
-        );
+        });
       });
     } else if (response.extensions && response.extensions.successMessage) {
       // Display success message if provided in extensions
-      GraphQLToastHandler.create(
-        "success",
-        response.extensions.successMessage,
+      showToast({
+        type: "success",
+        message: response.extensions.successMessage,
         duration,
-      );
+      });
     }
 
     // Return the data part of the response
     return response.data;
-  }
-
-  /**
-   * Creates and shows a toast notification
-   * @param {string} type - Toast type: 'success', 'error', or 'info'
-   * @param {string} message - Message to display
-   * @param {number} duration - How long to show the toast in ms
-   * @returns {HTMLElement} - The created toast element
-   */
-  static create(type, message, duration = 4000) {
-    const toast = document.createElement("graphql-toast");
-    toast.setAttribute("type", type);
-    toast.setAttribute("message", message);
-    toast.setAttribute("duration", duration.toString());
-    document.body.appendChild(toast);
-    return toast;
   }
 
   /**
