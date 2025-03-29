@@ -1,6 +1,6 @@
 {
   "name": "cannula-graphql",
-  "version": "0.0.9",
+  "version": "0.0.10",
   "description": "Light weight framework for cannula",
   "main": "dist/toast-component.js",
   "module": "dist/toast-component.esm.js",
