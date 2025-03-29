@@ -27,6 +27,9 @@ jobs:
       - name: Test
         run: npm test
 
+      - name: List dist directory (debugging)
+        run: ls -la dist/
+
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
         with:
