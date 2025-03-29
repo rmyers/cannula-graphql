@@ -643,6 +643,9 @@ var UILibrary = (function () {
 
   // The main initialization function
   async function initialize() {
+    // prevent content flashing
+    document.body.style.opacity = 0;
+
     try {
       // 1. Load and apply Pico CSS
       const picoResponse = await fetch(
@@ -680,9 +683,14 @@ var UILibrary = (function () {
         GraphQLToastHandler.registerHtmxExtension();
       }
 
+      // Show the document
+      document.body.style.opacity = 1;
+
       return true;
     } catch (error) {
       console.error("UI Library initialization failed:", error);
+      // Show the document
+      document.body.style.opacity = 1;
       return false;
     }
   }
