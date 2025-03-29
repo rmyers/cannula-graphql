@@ -1,4 +1,4 @@
-name: Version Bump
+name: Version and Release
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ on:
         default: "patch"
 
 jobs:
-  bump-version:
+  version-and-release:
     runs-on: ubuntu-latest
 
     permissions:
@@ -49,6 +49,11 @@ jobs:
 
       - name: Test
         run: npm test
+
+      - name: Commit dist files
+        run: |
+          git add -f dist/
+          git commit -m "Add dist files for v${{ steps.version-bump.outputs.new_version }} [skip ci]" || echo "No changes to commit"
 
       - name: Create GitHub Release
         id: create_release
