@@ -1,5 +1,5 @@
 import { html, fixture, expect, waitUntil } from "@open-wc/testing";
-import UILibrary from "../../src/index";
+import UILibrary from "../src/index";
 
 describe("toast-element", async () => {
   beforeEach(async () => {
@@ -58,6 +58,6 @@ describe("toast-element", async () => {
     const el = await fixture(
       html`<toast-element type="success"></toast-element>`,
     );
-    expect(el.classList.contains("success")).to.be.true;
+    expect(el.classList.contains("toast-success")).to.be.true;
   });
 });
