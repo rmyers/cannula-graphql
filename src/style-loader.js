@@ -1,7 +1,3 @@
-Share;
-
-Copy;
-
 /**
  * Loads Pico CSS and applies it to the document using Constructable Stylesheets
  * @returns {Promise<CSSStyleSheet|null>} The Pico CSS stylesheet or null if failed
