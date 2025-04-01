@@ -504,75 +504,46 @@ class LucideIcon extends HTMLElement {
 class FormErrorHandler {
   /**
    * Handles API error responses by adding error attributes to form elements
-   * @param {Object} errorResponse - The error response object from the API
+   * @param {Object} response - The error response object from the API
    */
-  static handleErrors(errorResponse) {
+  static handleErrors(response) {
     // Check if there are errors to process
-    if (!errorResponse || !errorResponse.errors) {
-      console.error("Invalid error response format");
+    if (!response.errors) {
       return;
     }
 
     // Reset any existing errors first
     FormErrorHandler.clearErrors();
 
-    // Process each form's errors
-    Object.keys(errorResponse.errors).forEach((formKey) => {
-      const formErrors = errorResponse.errors[formKey];
+    // Process each error
+    response.errors.forEach((error) => {
+      if (!error.extensions || !error.extensions.field) {
+        return;
+      }
 
-      // Process each error for this form
-      formErrors.forEach((error) => {
-        if (!error.field || !error.message) {
-          console.warn("Invalid error format:", error);
-          return;
-        }
+      // Find the input element
+      const fieldName = error.extensions.field;
+      const inputElement = document.querySelector(`[name="${fieldName}"]`);
 
-        // Find the input element
-        const fieldName = error.field;
-        const inputElement = document.querySelector(`[name="${fieldName}"]`);
+      if (!inputElement) {
+        console.warn(
+          `Input element with name "${fieldName}" not found. Adding error to form.`,
+        );
+        return;
+      }
 
-        if (!inputElement) {
-          console.warn(
-            `Input element with name "${error.field}" not found. Adding error to form.`,
-          );
+      // Use parent element (which would be the form field container in PicoCSS)
+      const parentElement = inputElement.parentElement;
+      if (!parentElement) {
+        console.warn(
+          `Parent element for input "${fieldName}" not found. Adding error directly.`,
+        );
+        FormErrorHandler.addError(inputElement, error.message);
+        return;
+      }
 
-          // Find the form element
-          const formElement = document.querySelector(
-            `form[name="${formKey}"], form#${formKey}, form[data-form-id="${formKey}"]`,
-          );
-          if (!formElement) {
-            // If we can't find the form, look for a div with the form's ID
-            const formContainer = document.getElementById(formKey);
-            if (!formContainer) {
-              console.error(
-                `Neither form nor container for "${formKey}" found`,
-              );
-              return;
-            }
-
-            // Add the error to the form container
-            FormErrorHandler.addError(formContainer, error.message);
-            return;
-          }
-
-          // Add the error to the form
-          FormErrorHandler.addError(formElement, error.message);
-          return;
-        }
-
-        // Use parent element (which would be the form field container in PicoCSS)
-        const parentElement = inputElement.parentElement;
-        if (!parentElement) {
-          console.warn(
-            `Parent element for input "${error.field}" not found. Adding error directly.`,
-          );
-          FormErrorHandler.addError(inputElement, error.message);
-          return;
-        }
-
-        // Add error to the parent element
-        FormErrorHandler.addError(parentElement, error.message);
-      });
+      // Add error to the parent element
+      FormErrorHandler.addError(parentElement, error.message);
     });
   }
 
@@ -740,6 +711,7 @@ class GraphQLToastHandler {
               ) {
                 // Handle the GraphQL response notifications
                 GraphQLToastHandler.handleResponse(response);
+                FormErrorHandler.handleErrors(response);
 
                 // Check if there's HTML in the extensions
                 if (response.extensions && response.extensions.html) {
@@ -749,10 +721,6 @@ class GraphQLToastHandler {
                   // If there's an error but no HTML or data, prevent the swap
                   evt.detail.shouldSwap = false;
                   return true;
-                }
-
-                if (response.extensions && response.extensions.errors) {
-                  FormErrorHandler.handleErrors(response.extensions);
                 }
               }
             } catch (e) {
