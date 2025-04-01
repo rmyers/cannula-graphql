@@ -1,0 +1,30 @@
+:host {
+  display: inline-flex;
+  width: 24px;
+  height: 24px;
+}
+
+:host([size="small"]) {
+  width: 16px;
+  height: 16px;
+}
+
+:host([size="large"]) {
+  width: 32px;
+  height: 32px;
+}
+
+.icon {
+  width: 100%;
+  height: 100%;
+  color: var(--icon-color, currentColor);
+  transition: all 0.2s ease;
+}
+
+:host([variant="primary"]) .icon {
+  color: var(--primary, #3b82f6);
+}
+
+:host([variant="muted"]) .icon {
+  color: var(--text-secondary, #6b7280);
+}

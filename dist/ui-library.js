@@ -71,9 +71,9 @@ var UILibrary = (function () {
     }
   }
 
-  var toastTemplate = "<div class=\"toast\"><div class=\"toast-icon\"><svg class=\"icon-success\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z\"/></svg> <svg class=\"icon-error\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z\"/></svg> <svg class=\"icon-info\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z\"/></svg> <svg class=\"icon-warning\" xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M1 21h22L12 2 1 21zm12-3h-2v-2h2v2zm0-4h-2v-4h2v4z\"/></svg></div><span class=\"message\"></span> <button class=\"close-btn\" aria-label=\"Close\"><svg xmlns=\"http://www.w3.org/2000/svg\" viewBox=\"0 0 24 24\"><path d=\"M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z\"/></svg></button></div>";
+  var toastTemplate = "<div class=\"toast\"><div class=\"toast-icon\"><lucide-icon name=\"info\" class=\"icon-type\"></lucide-icon></div><span class=\"message\"></span> <button class=\"close-btn\" aria-label=\"Close\"><lucide-icon name=\"x\" size=\"small\"></lucide-icon></button></div>";
 
-  var toastStyles = ":host{--toast-success-color:var(--pico-color-success,#10B981);--toast-error-color:var(--pico-color-error,#EF4444);--toast-info-color:var(--pico-primary,#3B82F6);--toast-warning-color:var(--pico-color-warning,#F59E0B);--toast-text-color:var(--pico-color-text,#6B7280);--toast-shadow:var(--pico-card-shadow,0 4px 12px rgba(0,0,0,0.15));--toast-border-radius:var(--pico-border-radius,8px);position:fixed;bottom:20px;right:20px;z-index:9999;display:block;min-width:300px;max-width:500px;transition:transform 0.3s ease,opacity 0.3s ease;transform:translateY(20px);opacity:0;pointer-events:none;background-color:transparent;}:host(.visible){transform:translateY(0);opacity:1;pointer-events:all;}.toast{display:flex;align-items:center;justify-content:space-between;box-shadow:var(--toast-shadow);padding:12px 16px;border-radius:var(--toast-border-radius);background:white;font-size:medium;}:host(.success) .toast{border:2px solid var(--toast-success-color);}:host(.error) .toast{border:2px solid var(--toast-error-color);}:host(.info) .toast{border:2px solid var(--toast-info-color);}:host(.warning) .toast{border:2px solid var(--toast-warning-color);}.toast-icon{margin-right:12px;font-size:20px;}.toast-icon svg{display:none;width:24px;height:24px;}:host(.success) .toast-icon .icon-success{display:block;fill:var(--toast-success-color);}:host(.error) .toast-icon .icon-error{display:block;fill:var(--toast-error-color);}:host(.info) .toast-icon .icon-info{display:block;fill:var(--toast-info-color);}:host(.warning) .toast-icon .icon-warning{display:block;fill:var(--toast-warning-color);}.message{flex:1;color:var(--toast-text-color);}.close-btn{background:none;border:none;cursor:pointer;font-size:18px;margin-left:8px;padding:4px;color:#6B7280;}.close-btn svg{width:18px;height:18px;fill:currentColor;}@media (max-width:600px){:host{min-width:auto;max-width:none;width:calc(100vw - 40px);}}";
+  var toastStyles = ":host{--toast-success-color:var(--pico-color-success,#10B981);--toast-error-color:var(--pico-color-error,#EF4444);--toast-info-color:var(--pico-primary,#3B82F6);--toast-warning-color:var(--pico-color-warning,#F59E0B);--toast-surface-color:white;--toast-text-color:white;--toast-shadow:var(--pico-card-shadow,0 4px 12px rgba(0,0,0,0.15));--toast-border-radius:var(--pico-border-radius,8px);--toast-font-family:var(--pico-font-family,sans-serif);--toast-font-size:16px;position:fixed !important;bottom:20px;right:20px;z-index:9999;display:block;background-color:transparent;min-width:300px;max-width:500px;transition:transform 0.3s ease,opacity 0.3s ease;transform:translateY(20px);opacity:0;pointer-events:none;}:host(.visible){transform:translateY(0);opacity:1;pointer-events:all;}.toast{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:var(--toast-border-radius);background:var(--toast-surface-color);box-shadow:var(--toast-shadow);font-family:var(--toast-font-family);font-size:var(--toast-font-size);}:host(.toast-success) .toast{background-color:var(--toast-success-color);color:white;}:host(.toast-error) .toast{background-color:var(--toast-error-color);}:host(.toast-info) .toast{background-color:var(--toast-info-color);}:host(.toast-warning) .toast{background-color:var(--toast-warning-color);}.toast-icon{margin-right:12px;color:var(--toast-text-color);}.message{flex:1;color:var(--toast-text-color);}.close-btn{background:none;border:none;cursor:pointer;font-size:18px;margin-left:8px;padding:4px;color:var(--toast-text-color);}.close-btn svg{width:18px;height:18px;fill:currentColor;}@media (max-width:600px){:host{min-width:auto;max-width:none;width:calc(100vw - 40px);}}";
 
   /**
    * Toast notification component
@@ -98,11 +98,12 @@ var UILibrary = (function () {
       this._duration = 3000;
       this._autoHide = true;
       this._timerId = null;
-      this._type = "info";
+      this._type = "toast-info";
 
       // Get required elements
       this.messageElement = this.shadowRoot.querySelector(".message");
       this.closeButton = this.shadowRoot.querySelector(".close-btn");
+      this.iconElement = this.shadowRoot.querySelector(".icon-type");
 
       // Add event listener for close button
       this.closeButton.addEventListener("click", () => this.hide());
@@ -129,6 +130,8 @@ var UILibrary = (function () {
       } else {
         // Apply default type
         this.classList.add(this._type);
+        // Set default icon
+        this._updateIcon(this._type);
       }
 
       if (this.hasAttribute("duration")) {
@@ -156,10 +159,23 @@ var UILibrary = (function () {
     }
 
     /**
+     * Update the icon based on toast type
+     * @private
+     */
+    _updateIcon(type) {
+      if (this.iconElement) {
+        // Map toast type to icon name
+        const iconName = type.replace("toast-", "") || "info";
+        this.iconElement.setAttribute("name", iconName);
+        this.iconElement.setAttribute("variant", iconName);
+      }
+    }
+
+    /**
      * Type getter
      */
     get type() {
-      return this._type;
+      return this._type.replace("toast-", "");
     }
 
     /**
@@ -170,8 +186,11 @@ var UILibrary = (function () {
         this.classList.remove(this._type);
       }
 
-      this._type = value;
-      this.classList.add(value);
+      this._type = `toast-${value}`;
+      this.classList.add(this._type);
+
+      // Update the icon when type changes
+      this._updateIcon(value);
     }
 
     /**
@@ -264,8 +283,8 @@ var UILibrary = (function () {
         this.dispatchEvent(new CustomEvent("toast:hidden"));
 
         // If this is from auto-hide, remove the element from DOM
-        if (this._autoHide) {
-          this.parentNode?.removeChild(this);
+        if (this.parentNode) {
+          this.parentNode.removeChild(this);
         }
 
         // Reposition remaining toasts
@@ -280,34 +299,22 @@ var UILibrary = (function () {
      * @private
      */
     _repositionAllToasts() {
-      document.querySelectorAll("toast-element").forEach((toast, index, all) => {
-        if (toast._visible) {
-          toast._updatePosition(index, all.length);
-        }
-      });
-    }
+      const toasts = document.querySelectorAll("toast-element");
+      const spaceBetweenToasts = 10; // Margin between toasts in pixels
+      let cumulativeHeight = 0;
 
-    /**
-     * Update the position of this toast based on its index
-     * @param {number} index - Index of this toast
-     * @param {number} total - Total number of toasts
-     * @private
-     */
-    _updatePosition(index, total) {
-      const spaceBetween = 10; // px
-      const base = 20; // base distance from edge (px)
+      // Convert NodeList to Array and reverse to start from the bottom
+      // This way we process toasts from bottom to top
+      Array.from(toasts)
+        .reverse()
+        .forEach((toast) => {
+          // Position this toast above the previous ones
+          toast.style.bottom = `${20 + cumulativeHeight}px`;
+          toast.style.right = "20px";
 
-      // Calculate height including margins
-      const height = this.offsetHeight + spaceBetween;
-
-      // Calculate position from bottom
-      const bottom = base + index * height;
-
-      // Update position
-      this.style.setProperty("bottom", `${bottom}px`);
-
-      // Make sure toast is visible in viewport
-      this.style.setProperty("z-index", String(10000 - index));
+          // Add this toast's height to the cumulative height
+          cumulativeHeight += toast.scrollHeight + spaceBetweenToasts;
+        });
     }
   }
 
@@ -329,7 +336,7 @@ var UILibrary = (function () {
     document.body.appendChild(toast);
     toast.show();
 
-    toast.addEventListener("toast-hidden", () => {
+    toast.addEventListener("toast:hidden", () => {
       setTimeout(() => {
         if (document.body.contains(toast)) {
           document.body.removeChild(toast);
@@ -411,6 +418,88 @@ var UILibrary = (function () {
 
     connectedCallback() {
       this.setupListeners();
+    }
+  }
+
+  var iconTemplate = "<svg xmlns=\"http://www.w3.org/2000/svg\" class=\"icon\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"></svg>";
+
+  var iconStyles = ":host{display:inline-flex;width:24px;height:24px;}:host([size=\"small\"]){width:16px;height:16px;}:host([size=\"large\"]){width:32px;height:32px;}.icon{width:100%;height:100%;color:var(--icon-color,currentColor);transition:all 0.2s ease;}:host([variant=\"primary\"]) .icon{color:var(--primary,#3b82f6);}:host([variant=\"muted\"]) .icon{color:var(--text-secondary,#6b7280);}";
+
+  /**
+   * Available icons these are copied from Lucide https://lucide.dev/icons/
+   *
+   * To add a new one just pick a name copy the contents of the svg here. Only include the
+   * contents of the svg and remove the <svg *></svg> tags as that is added by the component.
+   */
+  const icons = {
+    menu: '<line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line>',
+    home: '<path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline>',
+    settings:
+      '<path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"/>',
+    moon: '<path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/>',
+    sun: '<circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/>',
+    // Add toast notification icons
+    success:
+      '<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline>',
+    info: '<circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line>',
+    warning:
+      '<path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line>',
+    error:
+      '<circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line>',
+    x: '<line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line>',
+  };
+
+  /**
+   * LucideIcon web component
+   * @element lucide-icon
+   * @attr {string} name - Icon name
+   * @attr {string} size - Icon size: 'small', 'default', 'large'
+   * @attr {string} variant - Icon variant: 'primary', 'success', 'error', 'info', 'warning', 'muted'
+   * @attr {string} color - Custom icon color
+   */
+  class LucideIcon extends HTMLElement {
+    constructor() {
+      super();
+      this.attachShadow({ mode: "open" });
+
+      // Apply styles and load template
+      applyStyles(this.shadowRoot, iconStyles, document.adoptedStyleSheets);
+      loadTemplate(iconTemplate, this.shadowRoot);
+
+      // Get the SVG element
+      this.svgElement = this.shadowRoot.querySelector("svg");
+    }
+
+    static get observedAttributes() {
+      return ["name", "size", "variant", "color"];
+    }
+
+    connectedCallback() {
+      this.render();
+    }
+
+    attributeChangedCallback(name, oldValue, newValue) {
+      if (oldValue !== newValue) {
+        this.render();
+      }
+    }
+
+    render() {
+      const name = this.getAttribute("name");
+      const color = this.getAttribute("color");
+      const iconPath = icons[name] || "";
+
+      // Update SVG content with the selected icon
+      if (this.svgElement) {
+        this.svgElement.innerHTML = iconPath;
+
+        // Apply custom color if specified
+        if (color) {
+          this.svgElement.style.color = color;
+        } else {
+          this.svgElement.style.color = "";
+        }
+      }
     }
   }
 
@@ -686,14 +775,14 @@ var UILibrary = (function () {
 
     try {
       // 1. Load and apply Pico CSS
-      const picoResponse = await fetch(
-        "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
-      );
-      const picoCSS = await picoResponse.text();
+      // const picoResponse = await fetch(
+      //   "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
+      // );
+      // const picoCSS = await picoResponse.text();
 
-      const picoStyleSheet = new CSSStyleSheet();
-      picoStyleSheet.replaceSync(picoCSS);
-      document.adoptedStyleSheets = [picoStyleSheet];
+      // const picoStyleSheet = new CSSStyleSheet();
+      // picoStyleSheet.replaceSync(picoCSS);
+      // document.adoptedStyleSheets = [picoStyleSheet];
 
       // 2. Add your custom styles
       const customStyleSheet = new CSSStyleSheet();
@@ -705,7 +794,7 @@ var UILibrary = (function () {
     `);
 
       // 3. Apply stylesheets to document
-      document.adoptedStyleSheets = [picoStyleSheet, customStyleSheet];
+      document.adoptedStyleSheets = [customStyleSheet];
 
       // 4. Register web components if not already registered
       if (!customElements.get("toast-element")) {
@@ -714,6 +803,10 @@ var UILibrary = (function () {
 
       if (!customElements.get("theme-toggle")) {
         customElements.define("theme-toggle", ThemeToggle);
+      }
+
+      if (!customElements.get("lucide-icon")) {
+        customElements.define("lucide-icon", LucideIcon);
       }
 
       // 5. Register HTMX plugin if HTMX is available

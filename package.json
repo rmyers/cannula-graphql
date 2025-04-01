@@ -12,7 +12,8 @@
   "scripts": {
     "build": "rollup -c",
     "test": "web-test-runner tests/**/*.test.js --node-resolve",
-    "test:watch": "web-test-runner tests/**/*.test.js --node-resolve --watch"
+    "test:watch": "web-test-runner tests/**/*.test.js --node-resolve --watch",
+    "demo": "web-dev-server --node-resolve --watch --app-index example/index.html --open"
   },
   "keywords": [
     "toast",
@@ -23,16 +24,15 @@
   "author": "Robert Myers",
   "license": "MIT",
   "devDependencies": {
+    "@open-wc/testing": "^4.0.0",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
+    "@web/dev-server": "^0.4.6",
+    "@web/dev-server-esbuild": "^1.0.4",
+    "@web/test-runner": "^0.20.0",
+    "@web/test-runner-playwright": "^0.11.0",
     "rollup": "^4.9.6",
     "rollup-plugin-html": "^0.2.1",
     "rollup-plugin-import-css": "^3.5.0"
-  },
-  "dependencies": {
-    "@open-wc/testing": "^4.0.0",
-    "@web/dev-server-esbuild": "^1.0.4",
-    "@web/test-runner": "^0.20.0",
-    "@web/test-runner-playwright": "^0.11.0"
   }
 }

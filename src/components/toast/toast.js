@@ -25,11 +25,12 @@ export class ToastElement extends HTMLElement {
     this._duration = 3000;
     this._autoHide = true;
     this._timerId = null;
-    this._type = "info";
+    this._type = "toast-info";
 
     // Get required elements
     this.messageElement = this.shadowRoot.querySelector(".message");
     this.closeButton = this.shadowRoot.querySelector(".close-btn");
+    this.iconElement = this.shadowRoot.querySelector(".icon-type");
 
     // Add event listener for close button
     this.closeButton.addEventListener("click", () => this.hide());
@@ -56,6 +57,8 @@ export class ToastElement extends HTMLElement {
     } else {
       // Apply default type
       this.classList.add(this._type);
+      // Set default icon
+      this._updateIcon(this._type);
     }
 
     if (this.hasAttribute("duration")) {
@@ -83,10 +86,23 @@ export class ToastElement extends HTMLElement {
   }
 
   /**
+   * Update the icon based on toast type
+   * @private
+   */
+  _updateIcon(type) {
+    if (this.iconElement) {
+      // Map toast type to icon name
+      const iconName = type.replace("toast-", "") || "info";
+      this.iconElement.setAttribute("name", iconName);
+      this.iconElement.setAttribute("variant", iconName);
+    }
+  }
+
+  /**
    * Type getter
    */
   get type() {
-    return this._type;
+    return this._type.replace("toast-", "");
   }
 
   /**
@@ -97,8 +113,11 @@ export class ToastElement extends HTMLElement {
       this.classList.remove(this._type);
     }
 
-    this._type = value;
-    this.classList.add(value);
+    this._type = `toast-${value}`;
+    this.classList.add(this._type);
+
+    // Update the icon when type changes
+    this._updateIcon(value);
   }
 
   /**
@@ -191,8 +210,8 @@ export class ToastElement extends HTMLElement {
       this.dispatchEvent(new CustomEvent("toast:hidden"));
 
       // If this is from auto-hide, remove the element from DOM
-      if (this._autoHide) {
-        this.parentNode?.removeChild(this);
+      if (this.parentNode) {
+        this.parentNode.removeChild(this);
       }
 
       // Reposition remaining toasts
@@ -207,34 +226,22 @@ export class ToastElement extends HTMLElement {
    * @private
    */
   _repositionAllToasts() {
-    document.querySelectorAll("toast-element").forEach((toast, index, all) => {
-      if (toast._visible) {
-        toast._updatePosition(index, all.length);
-      }
-    });
-  }
+    const toasts = document.querySelectorAll("toast-element");
+    const spaceBetweenToasts = 10; // Margin between toasts in pixels
+    let cumulativeHeight = 0;
 
-  /**
-   * Update the position of this toast based on its index
-   * @param {number} index - Index of this toast
-   * @param {number} total - Total number of toasts
-   * @private
-   */
-  _updatePosition(index, total) {
-    const spaceBetween = 10; // px
-    const base = 20; // base distance from edge (px)
+    // Convert NodeList to Array and reverse to start from the bottom
+    // This way we process toasts from bottom to top
+    Array.from(toasts)
+      .reverse()
+      .forEach((toast) => {
+        // Position this toast above the previous ones
+        toast.style.bottom = `${20 + cumulativeHeight}px`;
+        toast.style.right = "20px";
 
-    // Calculate height including margins
-    const height = this.offsetHeight + spaceBetween;
-
-    // Calculate position from bottom
-    const bottom = base + index * height;
-
-    // Update position
-    this.style.setProperty("bottom", `${bottom}px`);
-
-    // Make sure toast is visible in viewport
-    this.style.setProperty("z-index", String(10000 - index));
+        // Add this toast's height to the cumulative height
+        cumulativeHeight += toast.scrollHeight + spaceBetweenToasts;
+      });
   }
 }
 
@@ -256,7 +263,7 @@ export function showToast(options = {}) {
   document.body.appendChild(toast);
   toast.show();
 
-  toast.addEventListener("toast-hidden", () => {
+  toast.addEventListener("toast:hidden", () => {
     setTimeout(() => {
       if (document.body.contains(toast)) {
         document.body.removeChild(toast);

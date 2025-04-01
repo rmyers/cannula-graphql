@@ -1,5 +1,6 @@
 import { ToastElement } from "./components/toast/toast.js";
 import { ThemeToggle } from "./components/theme-toggle/theme-toggle.js";
+import { LucideIcon } from "./components/icons/lucide-icon.js";
 import { GraphQLToastHandler, FormErrorHandler } from "./components/forms.js";
 
 // The main initialization function
@@ -9,14 +10,14 @@ async function initialize() {
 
   try {
     // 1. Load and apply Pico CSS
-    const picoResponse = await fetch(
-      "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
-    );
-    const picoCSS = await picoResponse.text();
+    // const picoResponse = await fetch(
+    //   "https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css",
+    // );
+    // const picoCSS = await picoResponse.text();
 
-    const picoStyleSheet = new CSSStyleSheet();
-    picoStyleSheet.replaceSync(picoCSS);
-    document.adoptedStyleSheets = [picoStyleSheet];
+    // const picoStyleSheet = new CSSStyleSheet();
+    // picoStyleSheet.replaceSync(picoCSS);
+    // document.adoptedStyleSheets = [picoStyleSheet];
 
     // 2. Add your custom styles
     const customStyleSheet = new CSSStyleSheet();
@@ -28,7 +29,7 @@ async function initialize() {
     `);
 
     // 3. Apply stylesheets to document
-    document.adoptedStyleSheets = [picoStyleSheet, customStyleSheet];
+    document.adoptedStyleSheets = [customStyleSheet];
 
     // 4. Register web components if not already registered
     if (!customElements.get("toast-element")) {
@@ -37,6 +38,10 @@ async function initialize() {
 
     if (!customElements.get("theme-toggle")) {
       customElements.define("theme-toggle", ThemeToggle);
+    }
+
+    if (!customElements.get("lucide-icon")) {
+      customElements.define("lucide-icon", LucideIcon);
     }
 
     // 5. Register HTMX plugin if HTMX is available
